@@ -1,23 +1,52 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState} from "react";
+import FormLogin from "./FormLogin";
+import FormSignup from "./FormSignup";
+import Informazioni from './Informazioni';
+
+
 
 function App() {
+  const [login, setLogin] = useState(false);
+  const [signup, setSignup] = useState(false);
+  const [token, setToken] = useState("");
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        token === "" ? 
+        <>
+          <br />
+          {
+            login ?
+            <>
+              <div><FormLogin setToken={setToken}/></div>
+              <button onClick={() => setLogin(false)}>Annulla</button>
+            </>
+          :
+          <button onClick={() => setLogin(true)}>Login</button>
+          } 
+          <hr />
+          {
+            signup ?
+              <>
+              <div><FormSignup setToken={setToken}/></div>
+              <button onClick={() => setSignup(false)}>Annulla</button>
+              </>
+            :
+            <button onClick={() => setSignup(true)}>Signup</button>
+          }
+        </>
+        :
+        <>
+        <Informazioni setToken={token}/>
+        <button onClick={() => setToken("")}>Logout</button>
+        </>
+        
+      }
+      
     </div>
   );
 }
